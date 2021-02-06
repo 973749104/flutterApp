@@ -6,7 +6,7 @@
  * @FilePath: /flutterApp/lib/main.dart
  * @Date: 2021-02-05 10:56:07
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-06 15:59:25
+ * @LastEditTime: 2021-02-06 17:54:27
  */
 import 'package:flutter/material.dart';
 import 'package:flutterApp/route/index.dart';
