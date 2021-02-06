@@ -5,11 +5,12 @@
  * @Description: 主入口
  * @FilePath: /flutterApp/lib/main.dart
  * @Date: 2021-02-05 10:56:07
- * @LastEditors: Arvin
- * @LastEditTime: 2021-02-05 14:50:12
+ * @LastEditors: PrendsMoi
+ * @LastEditTime: 2021-02-06 15:59:25
  */
 import 'package:flutter/material.dart';
-import 'package:flutterApp/view/app.dart';
+import 'package:flutterApp/route/index.dart';
+import 'package:flutterApp/view/splash.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,10 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: App(),
+      routes: routes,
+      // initialRoute: '/splash',
+      home: new Splash(),
     );
   }
 }

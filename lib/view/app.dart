@@ -5,8 +5,8 @@
  * @Description: 主体Layout
  * @FilePath: /flutterApp/lib/view/app.dart
  * @Date: 2021-02-05 11:26:08
- * @LastEditors: Arvin
- * @LastEditTime: 2021-02-05 15:01:51
+ * @LastEditors: PrendsMoi
+ * @LastEditTime: 2021-02-06 16:39:48
  */
 import 'package:flutter/material.dart';
 import 'package:flutterApp/view/tabBar/cart.dart';
@@ -27,7 +27,7 @@ class _AppState extends State<App> {
   int _selectIndex = 0;
 
   // 切换当前tabBar
-  void _ChangeView(int index) {
+  void _changeView(int index) {
     setState(() {
       _selectIndex = index;
     });
@@ -57,7 +57,7 @@ class _AppState extends State<App> {
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: '购物车')
           // BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
         ],
-        onTap: _ChangeView,
+        onTap: _changeView,
         currentIndex: _selectIndex,
         selectedFontSize: 12,
         unselectedFontSize: 12,
