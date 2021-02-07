@@ -3,10 +3,10 @@
  * @GitHub: https://github.com/973749104
  * @Blog: https://liuhgxu.com
  * @Description: 启动页
- * @FilePath: /flutterApp/lib/view/splash.dart
+ * @FilePath: \flutterApp\lib\view\splash.dart
  * @Date: 2021-02-06 13:57:01
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-06 17:52:17
+ * @LastEditTime: 2021-02-07 18:34:38
  */
 import 'package:flutter/material.dart';
 // import 'dart:async';
@@ -17,7 +17,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  // int _time = 10;
+  int _time = 10;
 
   void _goToHome() {
     Navigator.pushReplacementNamed(context, '/home');
@@ -29,8 +29,8 @@ class _SplashState extends State<Splash> {
   }
 
   Widget build(BuildContext context) {
-    return Material(
-      child: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
           Image.asset(
             "assets/image/splash.png",
@@ -47,7 +47,7 @@ class _SplashState extends State<Splash> {
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
                 width: 85.0,
                 child: Text(
-                  '跳过',
+                  '跳过 $_time',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14.0,

@@ -1,4 +1,4 @@
-package com.example.flutterApp
+package com.example.PrendsMoiApp
 
 import io.flutter.embedding.android.FlutterActivity
 

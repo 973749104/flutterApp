@@ -3,14 +3,14 @@
  * @GitHub: https://github.com/973749104
  * @Blog: https://liuhgxu.com
  * @Description: 主体Layout
- * @FilePath: /flutterApp/lib/view/app.dart
+ * @FilePath: \flutterApp\lib\view\app.dart
  * @Date: 2021-02-05 11:26:08
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-06 16:39:48
+ * @LastEditTime: 2021-02-07 18:35:03
  */
 import 'package:flutter/material.dart';
-import 'package:flutterApp/view/tabBar/cart.dart';
-import 'package:flutterApp/view/tabBar/home.dart';
+import 'package:PrendsMoiApp/view/tabBar/cart.dart';
+import 'package:PrendsMoiApp/view/tabBar/home.dart';
 
 class App extends StatefulWidget {
   @override
@@ -54,8 +54,9 @@ class _AppState extends State<App> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: '购物车')
-          // BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: '购物车'),
+          // BottomNavigationBarItem(icon: Icon(Icons.account_box), label: '个人'),
         ],
         onTap: _changeView,
         currentIndex: _selectIndex,
