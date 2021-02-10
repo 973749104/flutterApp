@@ -6,8 +6,9 @@
  * @FilePath: \flutterApp\lib\route\index.dart
  * @Date: 2021-02-05 17:21:47
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-07 18:37:56
+ * @LastEditTime: 2021-02-10 17:33:30
  */
+import 'package:PrendsMoiApp/view/adDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:PrendsMoiApp/view/app.dart';
 import 'package:PrendsMoiApp/view/list.dart';
@@ -19,7 +20,8 @@ final routes = {
   // 启动页
   '/splash': (context) => new Splash(),
   // 列表页
-  '/list': (context) => new List()
+  '/list': (context) => new GoodList(),
+  '/adDetail': (context) => new AdDetail(),
 };
 
 // 固定写法
@@ -30,12 +32,14 @@ final Function onGenerateRoutes = (RouteSettings settings) {
   if (pageContentBuilder != null) {
     if (settings.arguments != null) {
       final Route route = MaterialPageRoute(
-          builder: (context) =>
-              pageContentBuilder(context, arguments: settings.arguments));
+        builder: (context) =>
+            pageContentBuilder(context, arguments: settings.arguments),
+      );
       return route;
     } else {
-      final Route route =
-          MaterialPageRoute(builder: (context) => pageContentBuilder(context));
+      final Route route = MaterialPageRoute(
+        builder: (context) => pageContentBuilder(context),
+      );
       return route;
     }
   } else {
@@ -50,9 +54,33 @@ class MyRouteObserver extends NavigatorObserver {
   void didPush(Route route, Route preRoute) {
     //可通过route.settings获取路由相关内容
     //route.currentResult获取返回内容
-    print('route change: route');
-    print(route);
-    print('route change: preRoute');
-    print(preRoute);
+    // print('route change: route');
+    // print(route);
+    // print('route change: preRoute');
+    // print(preRoute);
   }
+}
+
+// 过渡动画
+class RouteFade extends PageRouteBuilder {
+  final Widget page;
+  RouteFade({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
 }

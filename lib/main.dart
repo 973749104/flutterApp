@@ -6,7 +6,7 @@
  * @FilePath: \flutterApp\lib\main.dart
  * @Date: 2021-02-07 17:52:19
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-07 18:39:44
+ * @LastEditTime: 2021-02-10 16:49:49
  */
 import 'package:PrendsMoiApp/route/index.dart';
 import 'package:PrendsMoiApp/view/splash.dart';

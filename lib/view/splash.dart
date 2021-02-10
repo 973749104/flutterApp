@@ -6,13 +6,13 @@
  * @FilePath: \flutterApp\lib\view\splash.dart
  * @Date: 2021-02-06 13:57:01
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-07 23:49:03
+ * @LastEditTime: 2021-02-10 17:30:24
  */
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-// import 'dart:async';
+import 'dart:async';
 
 class Splash extends StatefulWidget {
   @override
@@ -20,9 +20,11 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  int _time = 10;
+  Timer _timer;
+  int _time = 3;
   String _bingImg = "";
 
+  // 获取bing壁纸
   void _getBingImg() async {
     var _httpClient = new HttpClient();
     try {
@@ -32,10 +34,10 @@ class _SplashState extends State<Splash> {
       if (response.statusCode == HttpStatus.ok) {
         String json = await response.transform(utf8.decoder).join();
         var data = jsonDecode(json);
-        print(data['data']['url']);
         setState(() {
-          _bingImg = data['data']['url'];
+          _bingImg = data['data']['bing'];
         });
+        _coutdown();
       }
     } catch (e) {
       print(e);
@@ -43,8 +45,30 @@ class _SplashState extends State<Splash> {
     _httpClient.close();
   }
 
+  // 前往首页
   void _goToHome() {
     Navigator.pushReplacementNamed(context, '/home');
+  }
+
+  // 跳转广告详情
+  void _goAdDetail() {
+    Navigator.pushReplacementNamed(context, '/adDetail');
+  }
+
+  // 倒计时
+  void _coutdown() {
+    const oneSec = const Duration(seconds: 1);
+
+    var callback = (timer) => {
+          setState(() {
+            if (_time < 1) {
+              _goToHome();
+            } else {
+              _time -= 1;
+            }
+          })
+        };
+    _timer = Timer.periodic(oneSec, callback);
   }
 
   @override
@@ -54,19 +78,23 @@ class _SplashState extends State<Splash> {
   }
 
   Widget build(BuildContext context) {
-    print('{$_bingImg}/both/1080x1090');
     return Scaffold(
       body: Stack(
         children: [
           _bingImg.isNotEmpty
-              ? FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: '$_bingImg!/both/1080x1090',
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.fill,
+              ? InkWell(
+                  onTap: _goAdDetail,
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: '$_bingImg',
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
                 )
-              : SizedBox.shrink(),
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
           Positioned(
             right: 30.0,
             bottom: 50.0,
@@ -102,6 +130,7 @@ class _SplashState extends State<Splash> {
   @override
   void dispose() {
     print('splash被移除');
+    _timer.cancel();
     super.dispose();
   }
 }
