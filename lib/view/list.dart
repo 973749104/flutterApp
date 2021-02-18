@@ -6,7 +6,7 @@
  * @FilePath: \flutterApp\lib\view\list.dart
  * @Date: 2021-02-06 10:45:56
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-10 18:19:12
+ * @LastEditTime: 2021-02-18 17:29:13
  */
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -17,6 +17,10 @@ class GoodList extends StatefulWidget {
 }
 
 class _GoodListState extends State<GoodList> {
+  // 是否触顶部
+  bool _isTop = true;
+  // 选中的tab—key
+  int _selectKey = 0;
 // 列表组件
   List<Widget> _itemList() {
     List listData = [
@@ -74,21 +78,148 @@ class _GoodListState extends State<GoodList> {
     return list.values.toList();
   }
 
+  // 筛选组件
+  List<Widget> _tabsList() {
+    List listData = [
+      {"title": '综合', "key": 0},
+      {"title": '按销量', "key": 1},
+      {"title": '按价格', "key": 2},
+    ];
+    var tabs = listData.map(
+      (e) => Container(
+        margin: EdgeInsets.only(left: 15.0),
+        child: InkWell(
+          onTap: () => {
+            _clickTab(e['key']),
+          },
+          child: Text(
+            e['title'],
+            style: TextStyle(
+              color: _selectKey == e['key'] ? Colors.red : Colors.black,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return tabs.toList();
+  }
+
+  // 筛选
+  void _clickTab(int key) {
+    if (_selectKey == key) return;
+    setState(() {
+      _selectKey = key;
+    });
+  }
+
+  //切换置顶状态
+  void _changeIsTop(double top) {
+    // setState(() {
+    //   _top = (top > 0);
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('列表'),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: _itemList(),
-        // crossAxisSpacing: 0.0,
-        childAspectRatio: 2 / 3,
-        mainAxisSpacing: 5.0,
-        // padding: EdgeInsets.all(20),
+      backgroundColor: _isTop ? Colors.red : Colors.white,
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                leadingWidth: 25.0,
+                title: Container(
+                  margin: EdgeInsets.only(right: 10.0, left: 10.0),
+                  height: 32.0,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF2F2F2),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 35.0,
+                        height: 32.0,
+                        child: Icon(
+                          Icons.search,
+                          size: 22.0,
+                          color: Color(0xFF999999),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                toolbarHeight: 46.0,
+                floating: true,
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: PersistentHeaderBuilder(
+                  builder: (context, offset) {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: _tabsList(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SliverGrid.count(
+                crossAxisCount: 2,
+                children: _itemList(),
+                // crossAxisSpacing: 0.0,
+                childAspectRatio: 2 / 3,
+                mainAxisSpacing: 5.0,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
+}
+
+class PersistentHeaderBuilder extends SliverPersistentHeaderDelegate {
+  final double max;
+  final double min;
+  final Widget Function(
+    BuildContext context,
+    double offset,
+  ) builder;
+
+  PersistentHeaderBuilder({
+    this.max = 40,
+    this.min = 40,
+    @required this.builder,
+  }) : assert(
+          max >= min && builder != null,
+        );
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return builder(context, shrinkOffset);
+  }
+
+  @override
+  double get maxExtent => max;
+
+  @override
+  double get minExtent => min;
+
+  @override
+  bool shouldRebuild(covariant PersistentHeaderBuilder oldDelegate) =>
+      builder != oldDelegate.builder;
 }
