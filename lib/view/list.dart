@@ -3,10 +3,10 @@
  * @GitHub: https://github.com/973749104
  * @Blog: https://liuhgxu.com
  * @Description: 列表页面
- * @FilePath: \flutterApp\lib\view\list.dart
+ * @FilePath: /flutterApp/lib/view/list.dart
  * @Date: 2021-02-06 10:45:56
  * @LastEditors: PrendsMoi
- * @LastEditTime: 2021-02-18 17:29:13
+ * @LastEditTime: 2021-02-19 16:59:19
  */
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -18,7 +18,7 @@ class GoodList extends StatefulWidget {
 
 class _GoodListState extends State<GoodList> {
   // 是否触顶部
-  bool _isTop = true;
+  bool _isTop = false;
   // 选中的tab—key
   int _selectKey = 0;
 // 列表组件
